@@ -7,6 +7,9 @@ authors:
     given-names: Roc
     orcid: "https://orcid.org/0009-0008-3591-4028"
 version: "1.0.0"
+doi: "10.5281/zenodo.23195194"
+date-released: 2026-10-06
+url: "https://zenodo.org/records/23195194"
 license: CC-BY-4.0
 repository-code: "https://github.com/roc-sastre/bvar-residual-adequacy"
 abstract: "Application-specific diagnostic case study separating successful computation and structural Monte Carlo precision from residual adequacy. Substantive impulse responses remain withheld."

@@ -10,8 +10,8 @@
     },
     {
       "path": "CITATION.cff",
-      "bytes": 878,
-      "sha256": "ae9bb6560b3156597794adc7ba241fdb1783bea37c5c286e11792f61d0cac4af"
+      "bytes": 978,
+      "sha256": "e256449fa79c19211e45dbf57bce52235e31207ead3ed129a0bb13753bb8cd2c"
     },
     {
       "path": "diagnostic_records.json",
@@ -45,8 +45,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4446,
-      "sha256": "a36a9093e5c94594d1f0ee453cc520d7b1bb3de9bdc75bdd4b31bfdaee976838"
+      "bytes": 4938,
+      "sha256": "0e3a6c91734dd1b29e4879928da722e5516e01a69da01cf88206a92b6fdef2b9"
     },
     {
       "path": "validate.py",

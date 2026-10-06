@@ -67,9 +67,15 @@ link to the applicable licence, and indicate changes as required by that licence
 The licences apply only to the distributed material, not to withheld inputs,
 third-party papers, software or private research records.
 
-Publication destination: https://github.com/roc-sastre/bvar-residual-adequacy.
-The first planned release is v1.0.0; GitHub Release and Zenodo DOI are pending
-verification and activation of the owner’s Zenodo integration. No DOI is claimed.
+Public repository: https://github.com/roc-sastre/bvar-residual-adequacy.
+[Release v1.0.0](https://github.com/roc-sastre/bvar-residual-adequacy/releases/tag/v1.0.0)
+archives verified commit `92fa3adf19a558ffb713e6a9cd9a4d889bf3864b`.
+Version-specific archive DOI: [10.5281/zenodo.23195194](https://doi.org/10.5281/zenodo.23195194).
+[Zenodo record](https://zenodo.org/records/23195194) preserves the exact eleven-file
+release payload; the PDF attached to the GitHub Release has the frozen checksum.
+This DOI identifies the diagnostic replication package, not a separate journal
+publication. DOI metadata was added after release in one follow-up commit, with
+manifest hashes updated; the v1.0.0 tag and its frozen package are unchanged.
 The author’s existing personal website will receive a separate research-note
 entry through a reviewed pull request; the historical thesis entry is preserved.
 
