@@ -1,0 +1,285 @@
+{
+  "record_type": "Approved manuscript transcriptions and preserved diagnostic gate; no new empirical computation",
+  "frozen_commit": "c8c177b01f127043d8ba99ed06e70dfeb5b43ad7",
+  "table_rows": [
+    {
+      "id": "T1.1",
+      "frozen_latex_row": "Shared application & \\multicolumn{2}{P{.77\\textwidth}}{429 likelihood months, January 1990--September 2025; six presample months; IP growth, CPI inflation, yield level; intercept and six common lags.} \\\\",
+      "approved_audit_description": "Sample, variables, common dynamics",
+      "approved_source_locator": "E01 data README; E04 protocol §2"
+    },
+    {
+      "id": "T1.2",
+      "frozen_latex_row": "Pulses & \\multicolumn{2}{P{.77\\textwidth}}{Treated: March--August 2020 proper Gaussian pulses. Untreated: omitted. Impact restrictions: CPI negative, yield positive; IP unrestricted.} \\\\",
+      "approved_audit_description": "Pulse dates and design impact signs",
+      "approved_source_locator": "E04 protocol §§2/5"
+    },
+    {
+      "id": "T1.3",
+      "frozen_latex_row": "Covariance & One constant covariance & Four scale blocks; common $R$ and structural $Q$ \\\\",
+      "approved_audit_description": "Constant vs four scale blocks, common R/Q",
+      "approved_source_locator": "E04 protocol §§1/2/5"
+    },
+    {
+      "id": "T1.4",
+      "frozen_latex_row": "Prior / sampler & Conjugate NIW; independent joint rejection & Separation prior; Metropolis-within-Gibbs \\\\",
+      "approved_audit_description": "NIW/IID replaced by separation/MCMC",
+      "approved_source_locator": "E04 protocol §§1/3/4"
+    },
+    {
+      "id": "T1.5",
+      "frozen_latex_row": "Reference & Full-sample model-specific covariance & Average pre-2020 marginal variances; common $R$ \\\\",
+      "approved_audit_description": "Full-sample vs pre-2020 reference",
+      "approved_source_locator": "E04 protocol §§1/6; E14 revised-pilot §10"
+    },
+    {
+      "id": "T1.6",
+      "frozen_latex_row": "Variance criterion & Across-block ratio $>4$ and matching Holm ARCH $p<.01$ & Within-block half ratio $>4$ and matching Holm ARCH $p<.01$ \\\\",
+      "approved_audit_description": "Different old/new variance conjunctions",
+      "approved_source_locator": "E02 protocol §1; E04 protocol §7"
+    },
+    {
+      "id": "T1.7",
+      "frozen_latex_row": "Other revised criteria & Revised criteria not retroactively applied & Material fit outside $[.5,2]$, correlation gap $>.25$, max $|z|>6$ or excess kurtosis $>3$, with corresponding predictive resolution rule \\\\",
+      "approved_audit_description": "Revised material thresholds and unresolved rule",
+      "approved_source_locator": "E04 protocol §7; no old-rule retroactive application"
+    },
+    {
+      "id": "T2.1",
+      "frozen_latex_row": "Numerical integrity & Pass & Pass & Specified design / checked arithmetic \\\\",
+      "approved_audit_description": "Integrity pass",
+      "approved_source_locator": "E07 revised-pilot §§2/3"
+    },
+    {
+      "id": "T2.2",
+      "frozen_latex_row": "Maximum $\\widehat R$ & 1.005356 & 1.003931 & 80 monitored quantities \\\\",
+      "approved_audit_description": "Maximum Rhat 1.005356/1.003931",
+      "approved_source_locator": "E08 revised-pilot §4, 80 monitors"
+    },
+    {
+      "id": "T2.3",
+      "frozen_latex_row": "Minimum bulk ESS & 1597.38 & 1665.45 & Threshold 400 \\\\",
+      "approved_audit_description": "Minimum bulk ESS 1597.38/1665.45",
+      "approved_source_locator": "E08 revised-pilot §4"
+    },
+    {
+      "id": "T2.4",
+      "frozen_latex_row": "Minimum tail ESS & 2273.57 & 1823.47 & Threshold 400 \\\\",
+      "approved_audit_description": "Minimum tail ESS 2273.57/1823.47",
+      "approved_source_locator": "E08 revised-pilot §4"
+    },
+    {
+      "id": "T2.5",
+      "frozen_latex_row": "Initialization flag & False & False & No threshold crossing \\\\",
+      "approved_audit_description": "Initialization review false/false",
+      "approved_source_locator": "E08 revised-pilot §4"
+    },
+    {
+      "id": "T2.6",
+      "frozen_latex_row": "Precision failures & 0/152 & 0/152 & Pilot aggregate criterion \\\\",
+      "approved_audit_description": "Precision failures 0/152 each",
+      "approved_source_locator": "E09 revised-pilot §7, aggregate only"
+    },
+    {
+      "id": "T2.7",
+      "frozen_latex_row": "Maximum MC-width ratio & .268862 & .260501 & Threshold .30 \\\\",
+      "approved_audit_description": "Max normalized MC width .268862/.260501",
+      "approved_source_locator": "E09 revised-pilot §7, aggregate only"
+    },
+    {
+      "id": "T2.8",
+      "frozen_latex_row": "Unrestricted unstable share & 1.4375\\% & 1.5458\\% & Stability criterion passed \\\\",
+      "approved_audit_description": "Unstable shares 1.4375%/1.5458%, pass",
+      "approved_source_locator": "E10 revised-pilot §6"
+    },
+    {
+      "id": "T2.9",
+      "frozen_latex_row": "Accepted $P(\\rho>.98)$ & .767061 & .763961 & Descriptive root mass \\\\",
+      "approved_audit_description": "Accepted root mass .767061/.763961",
+      "approved_source_locator": "E10 revised-pilot §6; descriptive, not response probability"
+    },
+    {
+      "id": "T2.10",
+      "frozen_latex_row": "Residual adequacy & Not cleared & Not cleared & Interpretation withheld \\\\",
+      "approved_audit_description": "Residual review / interpretation withheld",
+      "approved_source_locator": "E11–E13 revised-pilot §§5/8; I01"
+    },
+    {
+      "id": "T3.1",
+      "frozen_latex_row": "Initial treated / ordinary & Yield across-block variance ratio 5.6292; matching Holm ARCH $p=.0014327$ & Original conjunction met; interpretation withheld \\\\",
+      "approved_audit_description": "Initial treated ordinary yield 5.6292/.0014327",
+      "approved_source_locator": "E02 protocol §1 and safe revised-pilot §10; original statistic only"
+    },
+    {
+      "id": "T3.2",
+      "frozen_latex_row": "Revised treated / all & Max $|z|=6.00677$; excess kurtosis 4.64346 & Material tails; predictive cutoffs unresolved; interpretation withheld \\\\",
+      "approved_audit_description": "Revised treated all tails 6.00677/4.64346",
+      "approved_source_locator": "E11/E13 revised-pilot §5"
+    },
+    {
+      "id": "T3.3",
+      "frozen_latex_row": "Revised treated / ordinary & Max $|z|=6.00677$; excess kurtosis 4.53783 & Material tails; predictive cutoffs unresolved; interpretation withheld \\\\",
+      "approved_audit_description": "Revised treated ordinary tails 6.00677/4.53783",
+      "approved_source_locator": "E11/E13 revised-pilot §5"
+    },
+    {
+      "id": "T3.4",
+      "frozen_latex_row": "Revised untreated / all & Block-4 IP half ratio 26.88203; matching Holm ARCH $p=2.02786\\times10^{-6}$ & Amended conjunction met; interpretation withheld \\\\",
+      "approved_audit_description": "Revised untreated all block-4 IP 26.88203/2.02786e-6",
+      "approved_source_locator": "E12 revised-pilot §5; same view/block/equation"
+    },
+    {
+      "id": "T3.5",
+      "frozen_latex_row": "Revised untreated / all & Block-4 IP/CPI gap .43716; excess kurtosis 6.45707 & Material correlation / tail discrepancies; cutoffs unresolved; interpretation withheld \\\\",
+      "approved_audit_description": "Revised untreated all IP/CPI .43716; kurtosis 6.45707",
+      "approved_source_locator": "E13 revised-pilot §5; unresolved"
+    },
+    {
+      "id": "T3.6",
+      "frozen_latex_row": "Revised untreated / ordinary & Block-4 IP variance fit .139962; excess kurtosis 4.71335 & Material fit / tail discrepancies; cutoffs unresolved; interpretation withheld \\\\",
+      "approved_audit_description": "Revised untreated ordinary IP fit .139962; kurtosis 4.71335",
+      "approved_source_locator": "E13 revised-pilot §5; unresolved"
+    },
+    {
+      "id": "T3.7",
+      "frozen_latex_row": "Revised treated / both & Fits .85579--1.03200; correlation gaps do not cross .25; half-ratio warnings lack matching ARCH & No binding fit/correlation condition; unmatched half ratios warn \\\\",
+      "approved_audit_description": "Treated fits .85579–1.03200 and nonbinding warnings",
+      "approved_source_locator": "E11–E13 revised-pilot §5"
+    },
+    {
+      "id": "T3.8",
+      "frozen_latex_row": "Revised pair / both & No combined serial condition; Holm LB not below .01; no $|ACF|>.20$ at lags 1--24 & Serial criterion not met \\\\",
+      "approved_audit_description": "Combined serial condition absent",
+      "approved_source_locator": "E11–E13 revised-pilot §5; inspected lags/masks only"
+    },
+    {
+      "id": "AT1.1",
+      "frozen_latex_row": "Data provenance & Archived revised snapshot; 56 data-validation checks passed & No real-time vintage; HTTP headers absent \\\\",
+      "approved_audit_description": "Snapshot, 56 data checks, limitations",
+      "approved_source_locator": "E01 data README"
+    },
+    {
+      "id": "AT1.2",
+      "frozen_latex_row": "Hard implementation & 113/113 checks per complete validation entry; algebra / quadrature references & Finite audited domains; not universal correctness \\\\",
+      "approved_audit_description": "113/113 hard implementation checks",
+      "approved_source_locator": "E05 validation report Hard validation gates"
+    },
+    {
+      "id": "AT1.3",
+      "frozen_latex_row": "Synthetic conditions & Shared SD recovery miss; 56/46 quantile objects fail pilot-style precision & One fixture; conditions not waived for empirical pilot \\\\",
+      "approved_audit_description": "Synthetic SD miss; 56/46 precision failures",
+      "approved_source_locator": "E06 validation report Stochastic evidence and conditions; no synthetic response value used"
+    },
+    {
+      "id": "AT1.4",
+      "frozen_latex_row": "Empirical integrity & 371 recorded input hashes; 93 presampler + 20 postrun checks per complete entry & Excludes failed startups; no fresh execution here \\\\",
+      "approved_audit_description": "371 hashes; 93+20 complete-entry checks",
+      "approved_source_locator": "E07 revised-pilot §§2/3"
+    },
+    {
+      "id": "AT1.5",
+      "frozen_latex_row": "Independent reconstruction & Numerical and scientific reconstructions support classifications & Historical checks; no new diagnostics for this note \\\\",
+      "approved_audit_description": "Historical independent reconstructions",
+      "approved_source_locator": "E15 revised-pilot §11 and validation report Replay, audits and repairs"
+    },
+    {
+      "id": "AT1.6",
+      "frozen_latex_row": "Exact replay & Numerical objects, decisions, RNG states and decoded pixels match; 20 synthetic and 30 empirical plot pairs & Excludes headers, timestamps, timing, transcripts and PNG metadata \\\\",
+      "approved_audit_description": "Exact numeric/decision/RNG/pixel replay; 20/30 plot pairs",
+      "approved_source_locator": "E16 validation report replay; validation results/replay.json, plot_replay.json; revised-pilot results/replay.json"
+    }
+  ],
+  "principal_claim_map": [
+    {
+      "destination_and_claim": "Abstract and introduction: computation/precision coexist with reporting stop; modest diagnostic case study",
+      "approved_claim_ids": "I01/I03, D03/D08/D09/D11–D13",
+      "evidence_ids": "E02/E07–E13/E15–E16"
+    },
+    {
+      "destination_and_claim": "Data: snapshot, series units, transformation, sample, lags",
+      "approved_claim_ids": "D01/D02, L06",
+      "evidence_ids": "E01/E04"
+    },
+    {
+      "destination_and_claim": "Model: pulses, four covariance blocks, common coefficients/correlations",
+      "approved_claim_ids": "D05/D15",
+      "evidence_ids": "E04/E14"
+    },
+    {
+      "destination_and_claim": "Identification: imposed impact signs, common Q, model-conditional label, joint Haar target",
+      "approved_claim_ids": "D05, M02, L04",
+      "evidence_ids": "E04"
+    },
+    {
+      "destination_and_claim": "Two rounds: first stop, intermediate diagnosis, all amended settings, within-pair comparability",
+      "approved_claim_ids": "D03–D05/D15, L05",
+      "evidence_ids": "E02–E04/E14"
+    },
+    {
+      "destination_and_claim": "Numerical validation and disclosed synthetic limitations",
+      "approved_claim_ids": "D06/D07, L06",
+      "evidence_ids": "E05/E06"
+    },
+    {
+      "destination_and_claim": "Integrity, 80-monitored convergence, initialization, fixed pilot precision",
+      "approved_claim_ids": "D08/D09",
+      "evidence_ids": "E07–E09"
+    },
+    {
+      "destination_and_claim": "Stability pass and descriptive near-root mass",
+      "approved_claim_ids": "D10, L04",
+      "evidence_ids": "E10"
+    },
+    {
+      "destination_and_claim": "Independent reconstruction and exact replay",
+      "approved_claim_ids": "D16",
+      "evidence_ids": "E15/E16, safe report summaries"
+    },
+    {
+      "destination_and_claim": "Direct original and amended variance/ARCH conjunctions",
+      "approved_claim_ids": "D03/D12",
+      "evidence_ids": "E02/E12"
+    },
+    {
+      "destination_and_claim": "Treated tails; untreated fit/correlation/tails; unresolved boundaries",
+      "approved_claim_ids": "D11/D13, I02/I04, L02",
+      "evidence_ids": "E11–E13"
+    },
+    {
+      "destination_and_claim": "Nonbinding warnings, satisfactory fit checks and absence of combined serial stop",
+      "approved_claim_ids": "D14, I04",
+      "evidence_ids": "E11–E13"
+    },
+    {
+      "destination_and_claim": "Interpretation withheld under distinct rules; no measured response defect",
+      "approved_claim_ids": "I01–I04, M03/M04",
+      "evidence_ids": "E04/E07–E13"
+    },
+    {
+      "destination_and_claim": "Limitations: bespoke thresholds, conditional replications, vintage, calibration, finite validation, sequential redesign",
+      "approved_claim_ids": "L01–L06",
+      "evidence_ids": "E01–E06/E10–E14"
+    },
+    {
+      "destination_and_claim": "Unresolved causes and unestimated robust alternatives",
+      "approved_claim_ids": "M05/M07, L03",
+      "evidence_ids": "Literature; E04/E11–E13 give context, not proof of alternative success"
+    },
+    {
+      "destination_and_claim": "Technical appendix: prior/target/reference, masks, predictive resolution and chain-aware precision definitions",
+      "approved_claim_ids": "D02/D05/D09/D11–D15, M01/M02/M04, L01/L02/L06",
+      "evidence_ids": "E01/E04/E09/E11–E14"
+    },
+    {
+      "destination_and_claim": "Replication appendix: existing provenance, validation, reconstruction and replay scope",
+      "approved_claim_ids": "D06/D07/D16, I01/I03, L06",
+      "evidence_ids": "E01/E05–E08/E15/E16"
+    }
+  ],
+  "preserved_gate": {
+    "fixed_design_completed": true,
+    "integrity_passed": true,
+    "comparability_passed": true,
+    "substantive_response_reporting_permitted": false
+  }
+}

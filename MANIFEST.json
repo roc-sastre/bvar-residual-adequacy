@@ -1,0 +1,57 @@
+{
+  "format": "sha256-and-byte-length-v1",
+  "frozen_commit": "c8c177b01f127043d8ba99ed06e70dfeb5b43ad7",
+  "self_policy": "MANIFEST.json is the sole unlisted file; its own hash is recorded in the private clearance record",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 68,
+      "sha256": "2b0c3be376337014558bd102443350a57a52fe6d318a3590f1426789922c2fff"
+    },
+    {
+      "path": "CITATION.cff",
+      "bytes": 878,
+      "sha256": "ae9bb6560b3156597794adc7ba241fdb1783bea37c5c286e11792f61d0cac4af"
+    },
+    {
+      "path": "diagnostic_records.json",
+      "bytes": 14730,
+      "sha256": "e825677c4d00c687c863cc92717458bd6ee4be1e4ec26d67c43940b1dd9ecd06"
+    },
+    {
+      "path": "LICENSE-CC-BY-4.0.txt",
+      "bytes": 17024,
+      "sha256": "7f38c38147b1b5e3fc5788e34104c965873b60bbf639c52392a85297810ebcbe"
+    },
+    {
+      "path": "LICENSE-MIT.txt",
+      "bytes": 1067,
+      "sha256": "737511983cf871cf20c05f321e222a289d0adbdd73e5f6260a72d645a7f6c79b"
+    },
+    {
+      "path": "manuscript/research_note.pdf",
+      "bytes": 349931,
+      "sha256": "fc06f3ed497153c12de2215ce4acf7b36cd909a1bf80064f074793106542646f"
+    },
+    {
+      "path": "manuscript/research_note.tex",
+      "bytes": 42449,
+      "sha256": "f0bcdfd9480198b53b6c3ca3e26eb851a0074598e963aabddbce9adbf6314ccf"
+    },
+    {
+      "path": "PROVENANCE.md",
+      "bytes": 4959,
+      "sha256": "deed52e5044ca2fa7edfb980361ced4d4d683d349ca95cfd3b38f422f2e4f42d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4446,
+      "sha256": "a36a9093e5c94594d1f0ee453cc520d7b1bb3de9bdc75bdd4b31bfdaee976838"
+    },
+    {
+      "path": "validate.py",
+      "bytes": 3933,
+      "sha256": "923dc9678abe83cab4b68edd7ea426cd7b92ec1bbce662b21d5c4ac28fa01ab1"
+    }
+  ]
+}

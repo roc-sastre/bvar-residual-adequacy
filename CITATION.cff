@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "Cite the research note; this is a diagnostic preserved-record verification package."
+type: dataset
+title: "Computational success and residual-adequacy limits in a small US Bayesian VAR"
+authors:
+  - family-names: Sastre
+    given-names: Roc
+    orcid: "https://orcid.org/0009-0008-3591-4028"
+version: "1.0.0"
+license: CC-BY-4.0
+repository-code: "https://github.com/roc-sastre/bvar-residual-adequacy"
+abstract: "Application-specific diagnostic case study separating successful computation and structural Monte Carlo precision from residual adequacy. Substantive impulse responses remain withheld."
+preferred-citation:
+  type: article
+  title: "Computational success and residual-adequacy limits in a small US Bayesian VAR"
+  authors:
+    - family-names: Sastre
+      given-names: Roc
+      orcid: "https://orcid.org/0009-0008-3591-4028"
+  year: 2026

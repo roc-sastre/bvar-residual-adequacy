@@ -1,0 +1,292 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,tabularx,longtable}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{2em}
+\widowpenalty=10000
+\clubpenalty=10000
+\renewcommand{\arraystretch}{1.18}
+\renewcommand{\thetable}{T\arabic{table}}
+\title{Computational success and residual-adequacy limits\linebreak in a small US Bayesian VAR}
+\author{\normalsize Roc Sastre\\
+\small MSc Financial Economics, Barcelona School of Economics\\
+\small Barcelona, Spain\\
+\small\href{mailto:roc.sastre@bse.eu}{roc.sastre@bse.eu}\\
+\small ORCID: \href{https://orcid.org/0009-0008-3591-4028}{0009-0008-3591-4028}}
+\hypersetup{pdfauthor={Roc Sastre}}
+\date{Research note --- 6 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+% I01/I03; D03/D08/D09/D11-D13; E02/E07-E13
+This diagnostic case study examines why successful computation was insufficient for substantive inference in a monthly US Bayesian VAR of industrial-production growth, CPI inflation and the two-year yield. An initial Gaussian fixed-coefficient specification with pandemic pulses failed its residual-adequacy criterion. A subsequent amendment allowed four blocks of residual scales with common dynamics and correlations. Both amended specifications passed implementation checks, monitored convergence, stability and structural Monte Carlo precision. These were necessary reporting conditions, but residual adequacy remained binding: an untreated variance/ARCH conjunction and material discrepancies with unresolved posterior-predictive cutoffs prevented impulse-response interpretation under criteria specified before execution. The contribution is application-specific evidence separating reliable model-conditional computation from adequacy for its intended use. No substantive response estimates, policy conclusions or validated alternative model are reported.
+\end{abstract}
+
+\section{Introduction}
+% I01/I03; M04/M06/M07; E02/E04/E07-E16
+A structural model can be computed reliably without establishing that its output supports the intended economic interpretation. This note documents that distinction in a small monthly US Bayesian vector autoregression (BVAR). Successful implementation, monitored convergence and structural Monte Carlo precision were required before substantive responses could be reported. Both final specifications met those numerical conditions, yet prespecified residual-adequacy criteria remained binding. The contribution is a diagnostic case study of that outcome, using existing evidence rather than a new estimator or a general comparison of model classes.
+
+% D01/D02; I01/I03; E01/E07-E13
+The application uses industrial-production growth, CPI inflation and the two-year yield from January 1990 through September 2025. It asks what the retained diagnostics establish about the adequacy limits of Gaussian fixed-coefficient BVARs with pandemic pulses and a limited block-covariance amendment, and why numerical success did not suffice for substantive impulse-response interpretation. The evidence covers an initial constant-covariance specification and an amendment motivated by its residual diagnostics. Each round's specification and reporting criteria were fixed before its execution; the second round followed observation of the first round's results. This sequence precludes a wholly prospective comparison or attribution of cross-round differences to covariance flexibility alone.
+
+% I01/I03; M04; E02/E07-E13
+The central finding separates necessary numerical conditions from residual conditions governing interpretation. In the revised round, both specifications passed implementation, convergence and fixed-count structural precision checks. The untreated model nevertheless met a matching variance/ARCH condition; both models had material discrepancies with unresolved predictive cutoffs. These are distinct reasons for withholding interpretation, and an unresolved cutoff is not a resolved predictive rejection. Discrepancy-based model checking evaluates selected aspects of fit \cite{gms1996}, while computational diagnostics assess simulation reliability \cite{vehtari2021}. The evidence therefore concerns the adequacy of these specifications for their intended use, without measuring bias or coverage of the withheld responses.
+
+% I01/I03; L01/L05; E02/E04/E07-E16
+The distinction matters for macroeconomic applications with unusual observations and changing innovation scales. Pandemic dummies, explicit pandemic volatility treatments and outlier components within stochastic-volatility BVARs are established approaches \cite{cg2022,lp2022,ccmm2024}. Their availability does not identify a remedy for this case. The note's value lies in making the assumptions, numerical passes and binding residual conditions jointly inspectable. It reports no substantive response estimates, policy effects, mechanisms or universal failure of Gaussian BVARs. The following sections define the application and the two rounds, present the computation and residual evidence, and explain the resulting limits to inference.
+
+\section{Data, model and identification limits}
+% D01/D02; L06; E01
+The archived revised-data snapshot was acquired on 28 September 2026. Industrial production is the seasonally adjusted INDPRO index from the Federal Reserve's G.17 release; CPI is the seasonally adjusted all-items CPIAUCSL index from the Bureau of Labor Statistics; GS2 is the Federal Reserve's H.15 two-year yield, a published business-day monthly average in percent. This is not a real-time vintage. The application excludes observations after September 2025. June 1989 supplies the index levels needed for the first transformation; July--December 1989 provide six conditioned presample observations. The likelihood has 429 consecutive months, without interpolation or annualization.
+
+% D02/D05; E01/E04
+Let $y_t=(g_t,\pi_t,r_t)'$, where $g_t=100\Delta\log IP_t$, $\pi_t=100\Delta\log CPI_t$ and $r_t=GS2_t$. Growth and inflation are monthly log percentage points; the yield remains a percentage level. With $x_t=(1,y_{t-1}',\ldots,y_{t-6}')'$, the treated observation equation is
+\[
+ y_t=B'x_t+\sum_{m\in\mathcal M}d_m1\{t=m\}+u_t,
+ \qquad \mathcal M=\{2020\mathrm{M}03,\ldots,2020\mathrm{M}08\}.
+\]
+The untreated specification omits the six pulse terms. Intercept and lag coefficients are common throughout the sample, and actual lagged observations are retained across pandemic dates and covariance boundaries. Variable ordering is bookkeeping, not recursive identification. No trend, seasonal dummies or endogenous lag search is used.
+
+% D05/D15; M01/M06; L06; E04/E14
+In the initial round $u_t$ has one Gaussian covariance matrix. The amendment uses $u_t\sim N_3(0,\Sigma_{b(t)})$, conditionally independent over dates, with $\Sigma_b=D_bRD_b$: four positive diagonal scale matrices and one common correlation matrix. Calendar blocks are 1990--1999, 2000--2009, 2010--2019 and January 2020--September 2025. They are model assumptions, not estimated breaks. Proper Gaussian pulse priors are integrated analytically; pulse rows retain their likelihood and lag roles. This differs from the dummy formulation discussed by Cascaldi-Garcia \cite{cg2022} and the volatility specification of Lenza and Primiceri \cite{lp2022}. Informative shrinkage addresses dense VAR estimation \cite{glp2015}, but the fixed calibration here is not hierarchical prior selection. Its uncertainty is not propagated.
+
+% D05; M02; L04; E04
+The structural mapping is $u_t=H_{b(t)}\varepsilon_t$, $H_b=D_bCQ$, where $CC'=R$, $Q$ is orthogonal and $\varepsilon_t\sim N_3(0,I_3)$. A common $Q$ across blocks imposes one orientation in standardized innovation space. The labelled first coordinate has negative CPI and positive yield impact; IP impact is unrestricted. Impact disinflation is therefore imposed, not discovered. These restrictions define a model-conditional disturbance, without establishing a pure Federal Reserve shock or an invariant historical economic shock. Sign-restricted inference depends on the joint target and parameterization \cite{arw2018}; the project's separation prior is not asserted to reproduce that paper's prior.
+
+% D05/D15; M02; E04/E14
+Stability and the impact restrictions jointly condition posterior draws and Haar rotations. Exactly one fresh rotation is drawn at every retained unrestricted iteration, including unstable iterations, and admissible joint pairs receive equal weight. Repeated rotation until acceptance would change the intended weighting. Revised normalization constructs a reference covariance from average pre-2020 marginal variances and the common correlation matrix. It excludes the final block from the reporting scale, while retaining it in estimation. The common rule does not impose equal estimated yield movements across models. Appendix A records the specification and reference-covariance convention; no resulting response quantity is presented.
+
+\section{Two empirical specification rounds}
+% D03/D04/D05; L05; E02-E04/E14
+The initial round used a conjugate normal--inverse-Wishart (NIW) prior, independent joint-rejection draws and full-sample model-specific normalization. Its treated ordinary-month yield residuals met the original across-block variance/ARCH reporting condition. A preserved intermediate diagnosis located variance heterogeneity beyond pandemic dates, identifying the largest yield contrast between the 1990s and the 2010s. That statement is a retained diagnostic summary, not an independently reconstructed estimate or a structural-break result. It motivated one bounded amendment without changing the lag dynamics or selecting a remedy on the basis of IP responses.
+
+% D05/D15; L05; E04/E14
+The amended round allowed block-specific scales but also replaced the NIW prior, conjugate sampling, reference normalization and diagnostic machinery. The revised prior separates fixed calibration-based coefficient uncertainty, log residual scales and a common correlation prior. Metropolis-within-Gibbs sampling replaces independent conjugate draws, with chain-aware precision calculations. Thus equal covariance blocks would recover the former likelihood, but generally not the former posterior. The change is not an isolated experiment measuring a covariance amendment's effect. Both rounds were specified before their own execution; the second was designed after observing the first round's diagnostics.
+
+% D05/D15; E04/E14
+Within the revised pair, the treated and untreated models share data, calibration, ordinary-coefficient and covariance priors, sampler counts, reference rule and diagnostic conventions. Only pulse inclusion differs. This symmetry makes the diagnostic comparison interpretable as sensitivity to modelling six exceptional observations. It supplies no causal pandemic-treatment effect. The final revised pilot again encountered a binding residual condition, despite successful numerical and precision checks. Table~\ref{tab:spec} lists shared design elements and material changes. Tables~\ref{tab:gates} and~\ref{tab:residual} organize the numerical and residual evidence, respectively; original and revised residual statistics are kept separate.
+
+% T1 row provenance: E01/E02/E04/E14; D01-D05/D15; audit T1.1-T1.7
+\begin{table}[htbp]
+\centering\small
+\caption{Specifications and reporting criteria}\label{tab:spec}
+\begin{tabularx}{\textwidth}{@{}P{.18\textwidth}LL@{}}
+\toprule
+Element & Initial round & Revised round \\
+\midrule
+Shared application & \multicolumn{2}{P{.77\textwidth}}{429 likelihood months, January 1990--September 2025; six presample months; IP growth, CPI inflation, yield level; intercept and six common lags.} \\
+Pulses & \multicolumn{2}{P{.77\textwidth}}{Treated: March--August 2020 proper Gaussian pulses. Untreated: omitted. Impact restrictions: CPI negative, yield positive; IP unrestricted.} \\
+Covariance & One constant covariance & Four scale blocks; common $R$ and structural $Q$ \\
+Prior / sampler & Conjugate NIW; independent joint rejection & Separation prior; Metropolis-within-Gibbs \\
+Reference & Full-sample model-specific covariance & Average pre-2020 marginal variances; common $R$ \\
+Variance criterion & Across-block ratio $>4$ and matching Holm ARCH $p<.01$ & Within-block half ratio $>4$ and matching Holm ARCH $p<.01$ \\
+Other revised criteria & Revised criteria not retroactively applied & Material fit outside $[.5,2]$, correlation gap $>.25$, max $|z|>6$ or excess kurtosis $>3$, with corresponding predictive resolution rule \\
+\bottomrule
+\end{tabularx}
+\par\smallskip\footnotesize Both rounds were specified before their own execution. The amendment followed the first residual diagnosis. Unresolved predictive cutoffs combined with material discrepancies also withhold interpretation. Thresholds are application-specific reporting criteria.
+\end{table}
+
+\section{Numerical validation and reproducibility}
+% D06/D07; E05/E06
+Preserved implementation validation covered likelihood and nesting identities, prior transformations and Jacobians, Gaussian coefficient conditionals, pulse integration, common rotations, normalization, diagnostic statistics, failure handling and random-number restoration. Independent algebra and quadrature benchmarks supplied checks separate from the sampler being examined. Each complete validation entry passed 113 hard checks. This supports correctness within the tested domains, not proof against every possible defect. One fixed synthetic fixture retained a shared standard-deviation recovery miss and 56/46 failed quantile-precision objects in treated/untreated models. Those conditions remained disclosed; neither a recovery guarantee nor empirical precision sufficiency was inferred from them.
+
+% D08/D16; E07/E08/E15/E16
+In the empirical revised pair, 371 previously specified hash checks supported input integrity. Complete entries passed the unchanged 93 presampler and 20 postrun hard checks. Four chains per model used 3,000 warm-up and 6,000 retained unrestricted iterations per chain, without thinning or extension. All 80 required rank/folded convergence monitors passed the $\widehat R\le1.01$ and bulk/tail ESS $\ge400$ rules, and the initialization-sensitivity flags were false. These monitored criteria support reliability of the preserved computation; they do not prove asymptotic convergence. Rank-based diagnostics and effective sample sizes assess simulation behaviour rather than empirical model fit \cite{vehtari2021}.
+
+% D09/D10; E09/E10
+Every required empirical structural precision object passed the prespecified pilot criterion: the failed-object count was zero out of 152 per model. The largest normalized quantile Monte Carlo width was .268862 for the treated model and .260501 for the untreated model, below the .30 pilot cutoff. This is aggregate approximation evidence; the underlying response estimates remain withheld. Stability also passed its prespecified criterion, although accepted posterior mass above spectral radius .98 was substantial (Table~\ref{tab:gates}). A pass at fixed pilot counts is not production certification, and root proximity was descriptive rather than a newly invented exclusion.
+
+% D16; E15/E16
+Independent reconstructions supported the numerical and adequacy classifications. Unchanged replay reproduced stored numerical objects, decisions, random-number states and decoded plot pixels exactly. The claim excludes headers, timestamps, timings, transcripts and image metadata. Reproducibility establishes that the same recorded procedure delivered the same recorded outcome in the preserved environment. It does not establish that the procedure's statistical assumptions describe the application adequately. Appendix Table~\ref{tab:replication} records the scope and qualifications without substituting a long implementation chronology for scientific evidence.
+
+% T2 provenance: E07-E13; D08-D13/I01; audit current T2.1-T2.10 (Stage 5.3 T3.1-T3.10)
+\begin{table}[htbp]
+\centering\small
+\caption{Computation and precision versus adequacy}\label{tab:gates}
+\begin{tabularx}{\textwidth}{@{}LrrP{.28\textwidth}@{}}
+\toprule
+Revised-pilot check & Treated & Untreated & Scope / outcome \\
+\midrule
+Numerical integrity & Pass & Pass & Specified design / checked arithmetic \\
+Maximum $\widehat R$ & 1.005356 & 1.003931 & 80 monitored quantities \\
+Minimum bulk ESS & 1597.38 & 1665.45 & Threshold 400 \\
+Minimum tail ESS & 2273.57 & 1823.47 & Threshold 400 \\
+Initialization flag & False & False & No threshold crossing \\
+Precision failures & 0/152 & 0/152 & Pilot aggregate criterion \\
+Maximum MC-width ratio & .268862 & .260501 & Threshold .30 \\
+Unrestricted unstable share & 1.4375\% & 1.5458\% & Stability criterion passed \\
+Accepted $P(\rho>.98)$ & .767061 & .763961 & Descriptive root mass \\
+Residual adequacy & Not cleared & Not cleared & Interpretation withheld \\
+\bottomrule
+\end{tabularx}
+\par\smallskip\footnotesize Root probabilities are stability diagnostics, not response-event probabilities. Precision is approximation precision under the model and joint conditioning, not an adequacy certificate.
+\end{table}
+
+\section{Residual-adequacy evidence}
+% D03/D11-D14; M04; L01/L02; E02/E11-E13
+The residual evidence addresses features not settled by convergence or replay. In the revised specifications, point diagnostics use unrestricted posterior summaries and model-consistent marginal standardization. Both all-month and ordinary-month views are retained; ordinary months exclude only the six pulse dates. Calendar gaps remain actual gaps. Assessment criteria match model, view, block and equation, and distinguish material severity, corresponding predictive resolution and warnings. Posterior-predictive checks compare realized discrepancies with conditional innovation replications \cite{gms1996}. Here they use fixed observed lags, so they do not test complete simulated economic histories.
+
+% D03/D12; E02/E12
+Two direct conjunctions must be kept apart. In the initial treated ordinary view, the yield's across-block variance ratio was 5.6292 and its matching Holm ARCH probability was .0014327. These met the original reporting criterion. In the revised untreated all-month view, block-4 IP had a within-block half-variance ratio of 26.88203 and matching Holm ARCH probability $2.02786\times10^{-6}$. This meets the amended conjunction criterion. The old across-block statistic is not the revised within-block statistic. Neither number estimates the amendment's effectiveness, and neither should be paired with evidence from a different mask or equation.
+
+% D11/D13; E11/E13
+The revised treated model has material standardized-tail discrepancies in both views. The maximum absolute residual is 6.00677; maximum equation excess kurtosis is 4.64346 in all months and 4.53783 in ordinary months. The extreme residual is IP in September 2008, which locates a diagnostic observation without identifying its economic cause. The corresponding predictive cutoffs remain unresolved. Interpretation is withheld because material severity coincides with unresolved predictive resolution, not a resolved posterior-predictive rejection. Block-specific scales did not remove every treated residual concern, even though average block variance fit was satisfactory.
+
+% D13; E13
+The untreated model additionally displays a material all-month block-4 IP/CPI correlation discrepancy and an ordinary-month block-4 IP variance-fit discrepancy. Their predictive cutoffs are unresolved. Untreated kurtosis discrepancies likewise remain material with unresolved cutoffs. Tail indicators have zero predictive exceedances in every model/view; the preserved add-one probability is $1/10001$, with Holm probability .00019998. Boundary Monte Carlo errors and intervals are undefined, not zero. For the IP/CPI discrepancy, the adjusted interval [.0070662,.0409290] straddles .01. Neither rejection nor nonrejection is resolved by that interval. No additional replications or newly calculated intervals are used.
+
+% D14; I04; E11-E13
+Nonbinding and passing checks temper the description. No revised model/view meets the combined serial criterion at the inspected lags and masks; this is not proof of serial independence. Treated variance fits lie between .85579 and 1.03200, and treated correlation discrepancies do not cross .25. Large treated half ratios without matching ARCH warnings remain warnings. Table~\ref{tab:residual} preserves this hierarchy. The evidence is consequently more specific than a blanket declaration that every diagnostic failed: numerical checks passed, some residual checks passed, some warnings were nonbinding, and designated material conditions still prevented substantive interpretation under the prespecified criteria.
+
+% D11-D15; I04; L02/L03; E04/E11-E14
+The masks and standardization are essential to that hierarchy. At treated pulse dates the marginal scale includes the integrated pulse variance; ordinary-month diagnostics remove those dates while retaining the calendar. A point residual diagnostic based on unrestricted summaries is also distinct from a draw-specific predictive discrepancy. Agreement about material severity does not itself determine the predictive cutoff's resolution. Similarly, satisfactory average variance within a block does not rule out a matching variance-instability condition inside that block. These distinctions prevent mixing an apparently favourable check with an adverse statistic that belongs to a different diagnostic question. They also keep the descriptive treated/untreated contrast from becoming an explanation of why the failures occurred.
+
+% T3 row provenance: E02/E11-E13; D03/D11-D14; audit current T3.1-T3.8 (Stage 5.3 T2.1-T2.8)
+\begin{table}[htbp]
+\centering\small
+\caption{Residual-adequacy outcomes by specification and view}\label{tab:residual}
+\begin{tabularx}{\textwidth}{@{}P{.23\textwidth}LP{.27\textwidth}@{}}
+\toprule
+Specification / view & Matched diagnostic evidence & Reporting consequence \\
+\midrule
+Initial treated / ordinary & Yield across-block variance ratio 5.6292; matching Holm ARCH $p=.0014327$ & Original conjunction met; interpretation withheld \\
+Revised treated / all & Max $|z|=6.00677$; excess kurtosis 4.64346 & Material tails; predictive cutoffs unresolved; interpretation withheld \\
+Revised treated / ordinary & Max $|z|=6.00677$; excess kurtosis 4.53783 & Material tails; predictive cutoffs unresolved; interpretation withheld \\
+Revised untreated / all & Block-4 IP half ratio 26.88203; matching Holm ARCH $p=2.02786\times10^{-6}$ & Amended conjunction met; interpretation withheld \\
+Revised untreated / all & Block-4 IP/CPI gap .43716; excess kurtosis 6.45707 & Material correlation / tail discrepancies; cutoffs unresolved; interpretation withheld \\
+Revised untreated / ordinary & Block-4 IP variance fit .139962; excess kurtosis 4.71335 & Material fit / tail discrepancies; cutoffs unresolved; interpretation withheld \\
+Revised treated / both & Fits .85579--1.03200; correlation gaps do not cross .25; half-ratio warnings lack matching ARCH & No binding fit/correlation condition; unmatched half ratios warn \\
+Revised pair / both & No combined serial condition; Holm LB not below .01; no $|ACF|>.20$ at lags 1--24 & Serial criterion not met \\
+\bottomrule
+\end{tabularx}
+\par\smallskip\footnotesize All and ordinary are distinct diagnostic masks. The old between-block ratio and revised half-block ratio are different statistics. Zero predictive exceedances do not establish zero uncertainty. Unresolved cutoffs are neither resolved rejections nor resolved nonrejections.
+\end{table}
+
+\section{Implications for this application}
+% I01/I02/I04; M03/M04; E04/E07-E13
+The evidence distinguishes computability, approximation precision and substantive defensibility. Stable parameter draws and admissible rotations make model-conditional responses computable; adequate Monte Carlo precision supports reliable approximation of their posterior summaries. In this application, both were necessary for reporting, but the residual criteria also had to be met. The numerical passes in Table~\ref{tab:gates} could neither negate the matching variance/ARCH condition nor resolve the predictive cutoffs in Table~\ref{tab:residual}. Substantive responses therefore remain withheld. No benchmark is available for measuring their bias, direction or coverage relative to an economically appropriate response.
+
+% I01; L01/L02; E04/E07-E13
+The reporting consequence depends on criteria specified before the revised execution. Some residual checks passed and some warnings were nonbinding; withholding interpretation followed the designated material conditions. Documenting that distinction preserves useful evidence about the attempted specifications without turning every diagnostic warning into a general prohibition on structural analysis.
+
+% M03; I01/I03; E07-E13
+Kleijn and van der Vaart \cite{kvv2012} provide related theoretical caution: under stated misspecified local-asymptotic-normality conditions, posterior approximation need not confer nominal frequentist confidence validity. Those assumptions have not been established for this VAR, so the theorem supplies context rather than an empirical finding about its response bias or coverage.
+
+\section{Limitations and unresolved explanations}
+% L01/L02; M04; E04/E13
+The materiality cutoffs, Holm families and approximate Monte Carlo resolution criteria are specific to this application. Posterior-predictive probabilities have their own model-checking interpretation \cite{gms1996}; no uniform-null calibration or familywise frequentist error-rate theorem is established here. The replications condition on observed lags and examine selected residual discrepancies, rather than complete simulated economic histories. Predictive boundaries remain unresolved at the retained replication count. These qualifications limit rejection claims and the generality of the reporting decision.
+
+% L03/L04/L06; E01/E04/E10-E13
+Fixed coefficients, common correlations and common structural orientation remain assumptions. High accepted near-root mass is a further interpretive qualification, not a new exclusion or a response-path finding. Posterior parameter probabilities and repeated-sample unit-root-test probabilities answer different questions \cite{su1991}; no additional pretest is used. The data are revised, HTTP response headers were not retained, and plug-in prior calibration uses observations also entering the likelihood. Conditional posterior uncertainty does not propagate calibration, vintage or model-class uncertainty. Validation of one synthetic fixture cannot establish repeated-sample recovery or transfer its precision properties to the empirical application.
+
+% L03/L05; M05/M07; E02-E06/E11-E14
+Sequential redesign creates model-selection risk. Residual evidence does not isolate heavy tails, within-block volatility, common-correlation restrictions or dynamics as a unique failure cause, and the treated/untreated contrast identifies no causal pandemic effect or economic mechanism. Bayesian heavy-tailed and contaminated-normal regression formulations are established alternatives \cite{liu1996}; BVAR outlier components can be distinguished from persistent stochastic volatility \cite{ccmm2024}. Independent scale weights need not cure volatility clustering. No robust alternative was uniquely selected or estimated, so neither its success nor failure is established for this application.
+
+% I03; L01/L03/L05; E02/E04/E11-E14
+This single case supports no general model ranking or threshold-sensitivity result. Its contribution is the inspectable separation of numerical reliability from residual adequacy. Identifying the causes of the discrepancies or evaluating a replacement would require evidence beyond this note.
+
+\section{Conclusion}
+% I01-I04; D03/D08-D13; E02/E07-E13
+Successful computation, monitored convergence and structural Monte Carlo precision were necessary but insufficient for substantive inference in this monthly US BVAR application. The initial constant-covariance specification met its original variance/ARCH condition. After a limited amendment, numerical checks passed for both specifications, but a matching untreated variance/ARCH conjunction and material discrepancies with unresolved predictive cutoffs still bound under the prespecified residual criteria. The case shows why reporting computational success and the conditions preventing interpretation is a defensible diagnostic outcome. It establishes limits for these specifications and this intended use; it supplies neither substantive response estimates nor policy conclusions, a general indictment of Gaussian BVARs or a validated replacement.
+
+\appendix
+\section{Technical specification and diagnostic definitions}
+% D02/D05/D15; E01/E04/E14
+The coefficient matrix is $B\in\mathbb R^{19\times3}$. The six conditioned presample months enter lag regressors without adding their densities to the likelihood. Four covariance blocks contain 120, 120, 120 and 69 likelihood rows. The first three blocks span complete decades; the last begins in January 2020, including January--February and all six pulse dates. Dynamics are not reset at block boundaries. Treated and untreated likelihoods use identical observations. Missing pulse terms in the untreated model are a specification difference rather than removal of observations. This preserves the difference between a pulse adjustment to the observation equation and a change in the dynamic coefficient process.
+
+% D05; E04
+For the revised treated model, $d_m\mid D,R\sim N_3(0,10^4\Sigma_4)$ independently across pulse dates and independently of $B$ conditional on covariance parameters. Integration gives innovation variance $k_t\Sigma_{b(t)}$, where $k_t=10001$ at treated pulse dates and one otherwise. The determinant and quadratic terms both use this marginal variance. Pulse observations remain regressors for subsequent dates. The multiplier does not enter structural impact matrices: pulse coefficients are not structural innovations. This exact distinction also governs residual standardization. Treating pulse dates as ordinary residuals after nearly saturated pulse fitting would diagnose a different object.
+
+% D05; M01; L06; E04
+The revised coefficient prior is $B\sim MN(B_0,V,S)$, independently of covariance parameters, with $S=\operatorname{diag}(s_g^2,s_\pi^2,s_r^2)$ taken from the saved pre-2020 AR(1) calibration. Only the yield's own first-lag prior mean is one; other means are zero. Intercept row variance is 100 and lag-row variance is $.2^2/(\ell^2s_j^2)$. Independently, $\log\sigma_{bi}\sim N(\log s_i,1)$ and $R\sim LKJ_3(2)$. Hyperparameters are fixed. These choices preserve selected Minnesota information while replacing the earlier covariance-dependent coefficient prior. They are not an implementation of hierarchical prior selection \cite{glp2015}, and calibration uncertainty remains unpropagated.
+
+% M02; D05; E04
+With $F(B)$ the companion matrix and $\rho$ its spectral radius, the joint structural target is
+\[
+ p^\star(\theta,Q\mid Y)\propto p(\theta\mid Y)\,d\mu_{\mathrm{Haar}}(Q)
+ 1\{\rho(F(B))<1\}1\{(CQ)_{21}<0,(CQ)_{31}>0\}.
+\]
+Positive diagonal scales make the imposed signs equivalent across blocks. One common $Q$ is an assumption, not identification through heteroskedasticity. The target conditions reduced forms and rotations jointly; it does not give each reduced form equal weight after forcing a successful rotation. This is the parameterization-sensitive context for citing Arias et al.\ \cite{arw2018}, without claiming prior equivalence or economic shock purity.
+
+% D05/D15; E04/E14
+For each draw, the revised reference scale is
+\[
+ \sigma_{\star i}=\sqrt{(\sigma_{1i}^2+\sigma_{2i}^2+\sigma_{3i}^2)/3},
+ \qquad \Sigma_\star=D_\star RD_\star.
+\]
+Average marginal variances are used, not average SDs or a pooled covariance matrix. Equal weights coincide with observation weights only because each pre-2020 block has 120 rows. The reference is a normalization convention, not an estimated regime. Keeping block 4 out of this scale does not remove it from the likelihood. Cross-round structural quantities would have changed prior and normalization meanings; none is compared or disclosed here.
+
+% D11-D14; L01/L02; E04/E11-E13
+Point residuals use $\bar B$ from unrestricted retained chains and $\hat\sigma_{bi}^2=E(\sigma_{bi}^2\mid Y)$:
+\[
+ z_{ti}=\frac{y_{ti}-(\bar B'x_t)_i}{\sqrt{k_t}\hat\sigma_{b(t),i}}.
+\]
+Ordinary block 4 retains 63 months. Its diagnostic subdivisions are January 2020--November 2022 and December 2022--September 2025. The half ratio is larger divided by smaller sample variance within those masked subdivisions. ARCH uses only current dates with twelve consecutive predecessors in the same block and mask; it never joins omitted dates. In the all-month view its valid counts are 108/108/108/57, and in the ordinary view 108/108/108/49. A ratio and ARCH warning form a binding conjunction only within the same model, view, block and equation.
+
+% D12/D14; L01; E04/E12
+ARCH regresses squared standardized residuals on an intercept and twelve squared calendar lags. The statistic is the eligible-row count times the regression's $R^2$, with a $\chi^2_{12}$ reference and a separate twelve-test Holm family per model/view. ARCH rejection alone is a warning; the material half ratio is also needed for the binding conjunction. Serial checks use demeaned standardized residuals and actual available calendar pairs at each lag, with Ljung--Box summaries at 12 and 24. Their six-test family is distinct from ARCH. A binding serial condition requires the matching equation's Holm rejection and at least two lags with $|ACF|>.20$. Passing this conjunction therefore does not certify absence of every form of serial dependence.
+
+% D13; M04; L02; E04/E13
+Predictive discrepancies use 10,000 selected unrestricted draws per model, 2,500 per chain at retained iterations 1,3,\ldots,4999. Observed lags are held fixed. Variance discrepancies use absolute log variance; correlations use absolute deviations from the draw's common correlation; tails use maximum absolute standardized residual and maximum equation excess kurtosis. Separate Holm families contain twelve variance, twelve correlation and two tail discrepancies per model/view. These choices test specified aspects of fit rather than all implications of the model \cite{gms1996}. They do not make a posterior-predictive probability a universal frequentist significance level.
+
+% D13; L01/L02; E04/E13
+Resolution uses 25 contiguous batches of 100 predictive indicators per chain. Simultaneous approximate 99\% family intervals are mapped through Holm lower and upper endpoints. Rejection is resolved only if the adjusted upper endpoint is below .01; nonrejection is resolved only if the lower endpoint is at least .01. Otherwise a matching material discrepancy requires review. At zero exceedances, boundary errors and intervals remain undefined. The add-one probability is retained without inventing a precision certificate. This preserves the distinction between numerical evidence of an unusual discrepancy and resolution sufficient to label a predictive rejection.
+
+% D09; E04/E09
+Structural Monte Carlo precision uses full ordered chains, including rejected joint pairs. For acceptance indicator $J_n$ and structural functional $f$, the ratio estimate is $\widehat E^\star f=\sum J_nf_n/\sum J_n$. Its influence sequence is $J_n(f_n-\widehat E^\star f)/\bar J$. Each chain is divided into 60 batches of 100 retained iterations; independent chain contributions are combined with equal weights. Empirical CDF uncertainty is inverted for quantile precision. Required equivalent ESS is at least 1000, probability MCSE at most .02 and normalized quantile width at most .30. This appendix specifies the precision method without reporting its response inputs or estimates.
+
+% D09/D16; E09/E15/E16
+Precision objects were evaluated under the fixed-count empirical pilot, separately from the earlier synthetic fixture. Independent reconstruction checked the ordered-chain calculations and supported the aggregate pass. Exact replay preserves those calculations and decisions; it does not make dependent iterations independent or replace the chain-aware uncertainty method. These are distinct safeguards for numerical provenance, estimation precision and faithful preservation of the stated target.
+
+\section{Replication scope and preserved validation}
+% D06/D07/D16; L06; E01/E05-E08/E15/E16
+The evidence chain links an archived source snapshot, unchanged transformations, saved calibration, a recorded specification, implementation validation, the final empirical pilot and independent reconstructions. Existing manifests provide provenance; this note transcribes evidence rather than rerunning estimation or calculating diagnostics. The recorded environment is MATLAB R2026a Update 5 on PCWIN64 with the Statistics toolbox 26.1. Equality claims concern the original preserved environment and repeat execution, not portability to arbitrary software. Input validation and replay are necessary provenance evidence but neither certifies the data vintage or model class as uniquely appropriate.
+
+% AT1 provenance: E01/E05-E08/E15/E16; audit AT1.1-AT1.6
+\begin{table}[htbp]
+\centering\small
+\setcounter{table}{0}
+\renewcommand{\thetable}{AT\arabic{table}}
+\renewcommand{\theHtable}{AT\arabic{table}}
+\caption{Validation, independent reconstruction and exact replay}\label{tab:replication}
+\begin{tabularx}{\textwidth}{@{}P{.22\textwidth}LL@{}}
+\toprule
+Domain & Preserved evidence & Qualification \\
+\midrule
+Data provenance & Archived revised snapshot; 56 data-validation checks passed & No real-time vintage; HTTP headers absent \\
+Hard implementation & 113/113 checks per complete validation entry; algebra / quadrature references & Finite audited domains; not universal correctness \\
+Synthetic conditions & Shared SD recovery miss; 56/46 quantile objects fail pilot-style precision & One fixture; conditions not waived for empirical pilot \\
+Empirical integrity & 371 recorded input hashes; 93 presampler + 20 postrun checks per complete entry & Excludes failed startups; no fresh execution here \\
+Independent reconstruction & Numerical and scientific reconstructions support classifications & Historical checks; no new diagnostics for this note \\
+Exact replay & Numerical objects, decisions, RNG states and decoded pixels match; 20 synthetic and 30 empirical plot pairs & Excludes headers, timestamps, timing, transcripts and PNG metadata \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% D16; I01/I03; E05-E16
+A diagnostic-only replication account must distinguish inspectable classifications from the larger retained estimation record. Mixed posterior objects and response summaries are not needed to reproduce the note's argument and are not reproduced in its tables. The companion audit maps every principal claim, table row and methodological citation to approved sources. Candidate figures were assessed individually and omitted where explanatory value or labelling was insufficient; Table~\ref{tab:residual} contains the necessary evidence. The resulting account documents numerical success and the residual reporting barrier without an economic-response exhibit. It does not certify that all retained artifacts are suitable for distribution or that a public replication archive has been cleared.
+
+\clearpage
+\begin{thebibliography}{10}
+\raggedright
+% Embedded scholarly records; access/version provenance remains in DRAFT_AUDIT.md.
+\bibitem{arw2018} Arias, J. E., J. F. Rubio-Ram\'{i}rez, and D. F. Waggoner (2018). Inference Based on Structural Vector Autoregressions Identified With Sign and Zero Restrictions: Theory and Applications. \emph{Econometrica} 86(2), 685--720. \href{https://doi.org/10.3982/ECTA14468}{doi:10.3982/ECTA14468}.
+\bibitem{ccmm2024} Carriero, A., T. E. Clark, M. Marcellino, and E. Mertens (2024). Addressing COVID-19 Outliers in BVARs with Stochastic Volatility. \emph{Review of Economics and Statistics} 106(5), 1403--1417. \href{https://doi.org/10.1162/rest_a_01213}{doi:10.1162/rest\_a\_01213}.
+\bibitem{cg2022} Cascaldi-Garcia, D. (2022). Pandemic Priors. \emph{International Finance Discussion Papers} 1352, Board of Governors of the Federal Reserve System. \href{https://doi.org/10.17016/IFDP.2022.1352}{doi:10.17016/IFDP.2022.1352}.
+\bibitem{gms1996} Gelman, A., X.-L. Meng, and H. Stern (1996). Posterior Predictive Assessment of Model Fitness via Realized Discrepancies. \emph{Statistica Sinica} 6(4), \href{https://sites.stat.columbia.edu/gelman/research/published/A6n41.pdf}{733--807}.
+\bibitem{glp2015} Giannone, D., M. Lenza, and G. E. Primiceri (2015). Prior Selection for Vector Autoregressions. \emph{Review of Economics and Statistics} 97(2), 436--451. \href{https://doi.org/10.1162/REST_a_00483}{doi:10.1162/REST\_a\_00483}.
+\bibitem{kvv2012} Kleijn, B. J. K., and A. W. van der Vaart (2012). The Bernstein--Von-Mises Theorem under Misspecification. \emph{Electronic Journal of Statistics} 6, 354--381. \href{https://doi.org/10.1214/12-EJS675}{doi:10.1214/12-EJS675}.
+\bibitem{lp2022} Lenza, M., and G. E. Primiceri (2022). How to Estimate a Vector Autoregression after March 2020. \emph{Journal of Applied Econometrics} 37(4), 688--699. \href{https://doi.org/10.1002/jae.2895}{doi:10.1002/jae.2895}.
+\bibitem{liu1996} Liu, C. (1996). Bayesian Robust Multivariate Linear Regression with Incomplete Data. \emph{Journal of the American Statistical Association} 91(435), 1219--1227. \href{https://doi.org/10.1080/01621459.1996.10476991}{doi:10.1080/01621459.1996.10476991}.
+\bibitem{su1991} Sims, C. A., and H. Uhlig (1991). Understanding Unit Rooters: A Helicopter Tour. \emph{Econometrica} 59(6), 1591--1599. \href{https://doi.org/10.2307/2938280}{doi:10.2307/2938280}.
+\bibitem{vehtari2021} Vehtari, A., A. Gelman, D. Simpson, B. Carpenter, and P.-C. B\"urkner (2021). Rank-Normalization, Folding, and Localization: An Improved $\widehat R$ for Assessing Convergence of MCMC. \emph{Bayesian Analysis} 16(2), 667--718. \href{https://doi.org/10.1214/20-BA1221}{doi:10.1214/20-BA1221}.
+\end{thebibliography}
+\end{document}
